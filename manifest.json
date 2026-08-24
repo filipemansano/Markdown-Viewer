@@ -2,7 +2,7 @@
   "name": "Markdown Viewer",
   "short_name": "Markdown Viewer",
   "description": "No-login browser-based Markdown editor and viewer with GFM live preview, diagrams, sharing, export, and client-side defaults.",
-  "id": "/",
+  "id": "./",
   "start_url": "./index.html?utm_source=pwa",
   "scope": "./",
   "display": "standalone",

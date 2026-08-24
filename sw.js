@@ -1,4 +1,5 @@
-const CACHE_NAME = 'markdown-viewer-cache-v3.10.1';
+const CACHE_NAME = 'markdown-viewer-cache-v3.10.2';
+const SCOPE_BASE_PATH = new URL('./', self.registration.scope).pathname;
 
 // PERF-011: Split precache into critical (local files) and lazy (CDN libraries)
 // Critical assets are precached during SW install for instant offline startup
@@ -60,7 +61,17 @@ self.addEventListener('fetch', event => {
   const isCDN = CDN_ORIGINS.some(origin => url.hostname.includes(origin));
 
   if (isLocal) {
-    const localPath = url.pathname.endsWith('/') ? '/' : url.pathname;
+    let localPath = url.pathname;
+    if (SCOPE_BASE_PATH !== '/') {
+      if (localPath === SCOPE_BASE_PATH || localPath === SCOPE_BASE_PATH.slice(0, -1)) {
+        localPath = '/';
+      } else if (localPath.startsWith(SCOPE_BASE_PATH)) {
+        localPath = `/${localPath.slice(SCOPE_BASE_PATH.length)}`;
+      }
+    }
+    if (localPath === '' || localPath === '/' || localPath.endsWith('/')) {
+      localPath = '/';
+    }
     const shouldUseNetworkFirst =
       event.request.mode === 'navigate' ||
       NETWORK_FIRST_LOCAL_PATHS.has(localPath) ||
