@@ -32,6 +32,7 @@
 - [What Markdown Viewer Does](#what-markdown-viewer-does)
 - [Highlights](#highlights)
 - [Quick Start](#quick-start)
+- [GitHub Pages Deployment](#github-pages-deployment)
 - [Local and Network Behavior](#local-and-network-behavior)
 - [Visual Renderer Summary](#visual-renderer-summary)
 - [Documentation](#documentation)
@@ -101,6 +102,15 @@ Other options:
 | Docker | [Docker Deployment](wiki/Docker-Deployment.md) |
 | Cloudflare Pages, KV, and Durable Objects | [Configuration](wiki/Configuration.md) |
 | Neutralino desktop application | [Desktop Application](wiki/Desktop-App.md) |
+
+## GitHub Pages Deployment
+
+- Live URL: [https://filipemansano.github.io/Markdown-Viewer/](https://filipemansano.github.io/Markdown-Viewer/)
+- One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**
+- GitHub Pages is static-only, so these limitations apply:
+  - **Live Share** does not work (requires Cloudflare Durable Objects in `workers/`).
+  - **Share Snapshot** works only for small documents that fit in the URL; large snapshots that require Cloudflare KV fail.
+  - `_headers`, `_redirects`, and `vercel.json` are ignored by GitHub Pages. CSP still applies via the `<meta http-equiv="Content-Security-Policy">` tag in `index.html`, but header-only rules in `_headers` are not applied.
 
 ## Local and Network Behavior
 
